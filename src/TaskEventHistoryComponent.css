@@ -1,0 +1,18 @@
+.searchBox {
+  margin-top: 15px;
+  margin-bottom: 15px;
+  margin-left: 15px;
+  max-width: 75%;
+}
+
+.resultsTable {
+  height: 100%;
+}
+
+.ReactTable {
+  margin-top: 10px;
+  margin-bottom: 25px;
+  margin-left: 15px;
+  margin-right: 15px;
+  height: 75%;
+}
