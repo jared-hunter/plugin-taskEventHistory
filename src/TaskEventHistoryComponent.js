@@ -1,5 +1,6 @@
 import React from "react";
 import ReactTable from "react-table";
+import { css } from "react-emotion";
 import {
   Button,
   FormControl,
@@ -8,8 +9,25 @@ import {
   HelpBlock
 } from "react-bootstrap";
 import { connect } from "react-redux";
-import "react-table/react-table.css";
-import "./TaskEventHistoryComponent.css";
+
+const searchBox = css`
+  margin-top: 15px;
+  margin-bottom: 15px;
+  margin-left: 15px;
+  max-width: 75%;
+`;
+
+const resultsTable = css`
+  height: 100%;
+`;
+
+const reactTableResults = css`
+  margin-top: 10px;
+  margin-bottom: 25px;
+  margin-left: 15px;
+  margin-right: 15px;
+  height: 75%;
+`;
 
 const columns = [
   {
@@ -145,7 +163,7 @@ export class TaskEventHistoryComponent extends React.Component {
   render() {
     return (
       <div>
-        <form class="searchBox">
+        <form className={searchBox}>
           <link
             rel="stylesheet"
             href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
@@ -165,12 +183,18 @@ export class TaskEventHistoryComponent extends React.Component {
             <Button onClick={this.handleSearchTaskSid}>Search</Button>
           </FormGroup>
         </form>
-        <div class="resultsTable">
+        <div className={resultsTable}>
+          <link
+            rel="stylesheet"
+            href="https://unpkg.com/react-table@latest/react-table.css"
+            crossorigin="anonymous"
+          />
           <ReactTable
+            className={reactTableResults}
             columns={columns}
             data={this.state.data}
             noDataText={this.state.noDataMessage}
-            className="-striped -highlight"
+            //className="-striped -highlight"
             defaultPageSize={50}
           />
         </div>
