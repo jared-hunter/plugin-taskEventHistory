@@ -117,19 +117,39 @@ export class TaskEventHistoryComponent extends React.Component {
       method: "POST",
       body: `taskSid=${taskSid}`
     })
-      .then(response => response.json())
-      .then(response => {
-        if (response.eventsize === 0) {
-          newMessage = response.message;
+      .then(
+        response => response.json(),
+        error => {
+          newMessage =
+            "Error calling function: Perhaps Function is not setup or serviceBaseUrl is not set correctly";
+          this.setState(state => ({
+            data: newData,
+            noDataMessage: newMessage
+          }));
         }
-        for (var i in response.eventlist) {
-          newData.push(this.convertEventRowToTableRow(response.eventlist[i]));
+      )
+      .then(
+        response => {
+          if (response.eventsize === 0) {
+            newMessage = response.message;
+          }
+          for (var i in response.eventlist) {
+            newData.push(this.convertEventRowToTableRow(response.eventlist[i]));
+          }
+          this.setState(state => ({
+            data: newData,
+            noDataMessage: newMessage
+          }));
+        },
+        error => {
+          newMessage =
+            "Error calling function: Perhaps Function is not setup or serviceBaseUrl is not set correctly";
+          this.setState(state => ({
+            data: newData,
+            noDataMessage: newMessage
+          }));
         }
-        this.setState(state => ({
-          data: newData,
-          noDataMessage: newMessage
-        }));
-      });
+      );
   }
 
   // for readability
