@@ -108,7 +108,6 @@ export class TaskEventHistoryComponent extends React.Component {
   componentWillUnmount() {}
 
   getEventHistoryForTask(url, taskSid) {
-    console.log("URL IS: %s", url);
     var newData = [];
     var newMessage = "";
     fetch(`https://${url}/getEventsForTask`, {
