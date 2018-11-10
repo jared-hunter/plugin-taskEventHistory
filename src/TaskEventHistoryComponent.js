@@ -70,14 +70,15 @@ const columns = [
 ];
 
 const mapStateToProps = state => {
+  var tempUrl =
+    state.flex.config.serviceBaseUrl.slice(-1) === "/"
+      ? state.flex.config.serviceBaseUrl.substring(
+          0,
+          state.flex.config.serviceBaseUrl.length - 1
+        )
+      : state.flex.config.serviceBaseUrl;
   return {
-    url:
-      state.flex.config.serviceBaseUrl.slice(-1) === "/"
-        ? state.flex.config.serviceBaseUrl.substring(
-            0,
-            state.flex.config.serviceBaseUrl.length - 1
-          )
-        : state.flex.config.serviceBaseUrl
+    url: tempUrl.replace("https://", "")
   };
 };
 
@@ -107,10 +108,10 @@ export class TaskEventHistoryComponent extends React.Component {
   componentWillUnmount() {}
 
   getEventHistoryForTask(url, taskSid) {
-    console.log("IN GETEVENTHISTORY");
+    console.log("URL IS: %s", url);
     var newData = [];
     var newMessage = "";
-    fetch(`${url}/getEventsForTask`, {
+    fetch(`https://${url}/getEventsForTask`, {
       headers: {
         "Content-Type": "application/x-www-form-urlencoded"
       },
