@@ -11,7 +11,10 @@ export default class TaskEventHistoryPlugin extends FlexPlugin {
     if (
       manager._store
         .getState()
-        .flex.session.ssoTokenPayload.roles.indexOf("admin") !== -1
+        .flex.session.ssoTokenPayload.roles.indexOf("admin") !== -1 ||
+      manager._store
+        .getState()
+        .flex.worker.attributes.roles.indexOf("admin") !== -1
     ) {
       flex.SideNav.Content.add(
         <SideLink
