@@ -22,7 +22,6 @@ const resultsTable = css`
 `;
 
 const reactTableResults = css`
-  margin-top: 10px;
   margin-bottom: 25px;
   margin-left: 15px;
   margin-right: 15px;
@@ -96,21 +95,18 @@ export class TaskEventHistoryComponent extends React.Component {
       data: [],
       noDataMessage: ""
     };
-    this.getEventHistoryForTask(
-      this.props.url,
-      this.state.taskSid
-      //"WTc04533277fc5b8d0d9dd265d936f5ed9"
-    );
+
+    this.getEventHistoryForTask(this.state.taskSid);
   }
 
   componentDidMount() {}
 
   componentWillUnmount() {}
 
-  getEventHistoryForTask(url, taskSid) {
+  getEventHistoryForTask(taskSid) {
     var newData = [];
     var newMessage = "";
-    fetch(`https://${url}/getEventsForTask`, {
+    fetch(`https://${this.props.url}/getEventsForTask`, {
       headers: {
         "Content-Type": "application/x-www-form-urlencoded"
       },
@@ -173,7 +169,7 @@ export class TaskEventHistoryComponent extends React.Component {
   }
 
   handleSearchTaskSid() {
-    this.getEventHistoryForTask(this.props.url, this.state.taskSid);
+    this.getEventHistoryForTask(this.state.taskSid);
   }
 
   handleTaskSidChange(event) {
@@ -183,14 +179,14 @@ export class TaskEventHistoryComponent extends React.Component {
   render() {
     return (
       <div>
-        <form className={searchBox}>
+        <div className={searchBox}>
           <link
             rel="stylesheet"
             href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
             integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
             crossorigin="anonymous"
           />
-          <FormGroup controlId="formBasicText">
+          <FormGroup>
             <ControlLabel>Search For Task SID</ControlLabel>
             <FormControl
               type="text"
@@ -199,10 +195,10 @@ export class TaskEventHistoryComponent extends React.Component {
               onChange={this.handleTaskSidChange}
             />
             <FormControl.Feedback />
-            <HelpBlock>Default search period is last 48 hours</HelpBlock>
+            <HelpBlock>Default search period is the last 48 hours</HelpBlock>
             <Button onClick={this.handleSearchTaskSid}>Search</Button>
           </FormGroup>
-        </form>
+        </div>
         <div className={resultsTable}>
           <link
             rel="stylesheet"
@@ -214,7 +210,6 @@ export class TaskEventHistoryComponent extends React.Component {
             columns={columns}
             data={this.state.data}
             noDataText={this.state.noDataMessage}
-            //className="-striped -highlight"
             defaultPageSize={50}
           />
         </div>

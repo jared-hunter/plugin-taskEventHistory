@@ -3,8 +3,12 @@ import React from "react";
 import { SideLink, Actions } from "@twilio/flex-ui";
 import TaskEventHistoryComponent from "./TaskEventHistoryComponent";
 
+const PLUGIN_NAME = "TaskEventHistoryPlugin";
+
 export default class TaskEventHistoryPlugin extends FlexPlugin {
-  pluginName = "TaskEventHistoryPlugin";
+  constructor() {
+    super(PLUGIN_NAME);
+  }
 
   init(flex, manager) {
     //adds the task button to the navbar if user is admin
@@ -22,15 +26,17 @@ export default class TaskEventHistoryPlugin extends FlexPlugin {
           icon="Cogs"
           onClick={() =>
             Actions.invokeAction("NavigateToView", {
-              viewName: "TaskHistoryComponentView"
+              viewName: "TaskEventHistoryComponentView"
             })
           }
-        />
+        >
+          Event History Search
+        </SideLink>
       );
 
       // Creates accessible view for reference
       flex.ViewCollection.Content.add(
-        <flex.View name="TaskHistoryComponentView" key="taskHistory">
+        <flex.View name="TaskEventHistoryComponentView" key="taskHistory">
           <TaskEventHistoryComponent key="taskHistory" />
         </flex.View>
       );

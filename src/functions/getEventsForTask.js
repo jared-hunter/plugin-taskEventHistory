@@ -9,7 +9,7 @@
  *  the default period of the vent history is 2880 minutes (2 days)
  *
  *  DEPENDENCIES: After creating function ensure environment variable is added
- *     TWILIO_FLEX_WORKSPACE assign the value of your flex workspace
+ *     TWILIO_FLEX_WORKSPACE_SID assign the value of your flex workspace
  *
  *  TBD: Add minutes as a parameter
  */
@@ -22,7 +22,7 @@ exports.handler = function(context, event, callback) {
   response.appendHeader("Content-Type", "application/json");
   response.appendHeader("Access-Control-Allow-Headers", "Content-Type");
 
-  console.log("event workspace %s", context.TWILIO_FLEX_WORKSPACE);
+  console.log("event workspace %s", context.TWILIO_FLEX_WORKSPACE_SID);
   console.log("event task %s", event.taskSid);
 
   let returnEvents = function(err, events) {
@@ -44,13 +44,17 @@ exports.handler = function(context, event, callback) {
     return callback(null, response);
   };
 
-  if (context.TWILIO_FLEX_WORKSPACE && event.taskSid && event.taskSid !== "") {
+  if (
+    context.TWILIO_FLEX_WORKSPACE_SID &&
+    event.taskSid &&
+    event.taskSid !== ""
+  ) {
     client.taskrouter
-      .workspaces(context.TWILIO_FLEX_WORKSPACE)
+      .workspaces(context.TWILIO_FLEX_WORKSPACE_SID)
       .events.list({ taskSid: event.taskSid, minutes: 2880 }, returnEvents);
-  } else if (context.TWILIO_FLEX_WORKSPACE) {
+  } else if (context.TWILIO_FLEX_WORKSPACE_SID) {
     client.taskrouter
-      .workspaces(context.TWILIO_FLEX_WORKSPACE)
+      .workspaces(context.TWILIO_FLEX_WORKSPACE_SID)
       .events.list({ minutes: 2880 }, returnEvents);
   } else {
     response.body = {
